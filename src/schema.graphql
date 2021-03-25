@@ -1,0 +1,87 @@
+# type definitions (schema)
+# Scalar Types {String, Boolean, numbers(Int || Float), ID }
+
+type Query {
+    add(numbers: [Float!]!): Float!
+    grades: [Int!]!
+    greet(name: String): String!
+    me: User
+    users(query: String): [User!]!
+    posts: [Post!]!
+    comments: [Comment!]!
+}
+type Mutation {
+    createUser (data: CreateUser): User!
+    createPost (data: CreatePost): Post!
+    createComment (data: CreateComment): Comment!
+    deleteUser (id: ID!): User!
+    deletePost (id: ID!): Post!
+    deleteComment (id: ID!): Comment!
+    updateUser (id: ID!, data: UpdateUser): User!
+    updatePost (id: ID!, data: UpdatePost): Post!
+    updateComment (id: ID!, data: UpdateComment): Comment!
+}
+
+type Subscription {
+    count: Int!,
+    comment(postId: ID!): Comment!
+}
+
+input CreateUser {
+    name: String!,
+    email: String!,
+    age: Int
+}
+input UpdateUser {
+    name: String,
+    email: String,
+    age: Int
+}
+
+input CreatePost {
+    title: String!,
+    body: String!,
+    published: Boolean!,
+    author: Int!
+}
+input UpdatePost {
+    title: String,
+    body: String,
+    published: Boolean,
+    author: Int
+}
+
+
+input CreateComment {
+    body: String!,
+    author: Int!,
+    post: Int!
+}
+input UpdateComment {
+    body: String,
+    author: Int,
+    post: Int
+}
+
+type User {
+    age: Int
+    comments: [Comment!]!
+    email: String!
+    id: ID!
+    name: String!
+    posts: [Post!]!
+}
+type Post {
+    author: User!
+    body: String!
+    comments: [Comment!]!
+    id: ID!
+    published: Boolean!
+    title: String!
+}
+type Comment {
+    author: User!
+    body: String!
+    id: ID!
+    post: Post!
+}
